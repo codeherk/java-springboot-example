@@ -4,14 +4,15 @@ A Java Spring Boot containerized API example
 
 ## Table of Contents
 
-- [Documentation](#documentation)
+- [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Contributing](#contributing)
 
-## Documentation
+## Overview
 Technologies used:
-- Java: API via gin
+- Java: Object Oriented Programming Language
+- Spring Boot: Java-based web framework for developing microservices
 - MySQL: Database that holds the Task data
 - Docker: containerize the API and Database for local development
 - Maven: a project management tool
