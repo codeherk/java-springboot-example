@@ -14,7 +14,7 @@ class DatabaseLoader {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseLoader.class);
 
-    @Bean
+//    @Bean
     CommandLineRunner initDatabase(TaskRepository repository) {
         Task task1 = new Task("Create Spring Boot Application");
 //        Timestamp t = new Timestamp(System.currentTimeMillis());
