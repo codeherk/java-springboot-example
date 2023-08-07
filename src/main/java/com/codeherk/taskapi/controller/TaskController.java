@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
 
     @Autowired
-    private final TaskService taskService;
+    private TaskService taskService;
 
-    TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
+//    Constructors are inferred
+//    TaskController(){}
 
 
     // Aggregate root
