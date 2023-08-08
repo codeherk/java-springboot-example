@@ -23,8 +23,17 @@ public class TaskService {
         return repository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
     }
 
-    public Task createTask(Task newTask) {
-        return repository.save(newTask);
+
+//    public Task createTask(Task newTask) {
+//        return repository.save(newTask);
+//    }
+
+    public List<Task> createTasks(List<Task> newTasks) {
+        for (Task task: newTasks) {
+            // send event
+            EventHandler.handle(task);
+        }
+        return repository.saveAll(newTasks);
     }
 
     public Task updateTask(Task newTask, Long id) {

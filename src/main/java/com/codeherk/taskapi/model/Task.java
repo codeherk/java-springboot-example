@@ -11,11 +11,16 @@ import java.util.Objects;
 @Table(name="tasks")
 public class Task {
 
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String description;
+
     @Column(name="created_timestamp")
     @CreationTimestamp
     private Timestamp createdTimestamp;
+
     @Column(name="updated_timestamp")
     @UpdateTimestamp
     private Timestamp updatedTimestamp;

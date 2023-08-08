@@ -31,9 +31,14 @@ public class TaskController {
     }
     // end::get-aggregate-root[]
 
+//    @PostMapping("/tasks")
+//    Task createTask(@RequestBody Task newTask) {
+//        return taskService.createTask(newTask);
+//    }
+
     @PostMapping("/tasks")
-    Task createTask(@RequestBody Task newTask) {
-        return taskService.createTask(newTask);
+    List<Task> createTasks(@RequestBody List<Task> newTasks) {
+        return taskService.createTasks(newTasks);
     }
 
     // Single task
