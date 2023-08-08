@@ -38,9 +38,10 @@ public class TaskService {
 //    }
 
     public List<Task> createTasks(List<Task> newTasks) {
-        eventService.handle(newTasks);
         log.info("saving " + newTasks.size() + " tasks to table");
-        return repository.saveAll(newTasks);
+        List<Task> result = repository.saveAll(newTasks);
+        eventService.handle(newTasks);
+        return result;
     }
 
     public Task updateTask(Task newTask, Long id) {

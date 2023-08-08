@@ -10,9 +10,6 @@ import java.util.List;
 @Service
 public class EventService<T> {
     private static final Logger log = LoggerFactory.getLogger(EventService.class);
-//    public static void handle(Task task){
-//        System.out.println("Handling task " + task.getId());
-//    }
 
     @Async("threadPoolTaskExecutor")
     public void handle(List<T> list){
