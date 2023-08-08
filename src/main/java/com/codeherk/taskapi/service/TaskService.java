@@ -3,6 +3,10 @@ package com.codeherk.taskapi.service;
 import com.codeherk.taskapi.exception.TaskNotFoundException;
 import com.codeherk.taskapi.model.Task;
 import com.codeherk.taskapi.repo.TaskRepository;
+import com.sun.source.util.TaskListener;
+import jdk.jfr.Event;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +14,13 @@ import java.util.List;
 
 @Service
 public class TaskService {
+    private static final Logger log = LoggerFactory.getLogger(EventService.class);
+
     @Autowired
     private TaskRepository repository;
+
+    @Autowired
+    private EventService<Task> eventService;
 
 //    public TaskService() {}
 
@@ -29,10 +38,8 @@ public class TaskService {
 //    }
 
     public List<Task> createTasks(List<Task> newTasks) {
-        for (Task task: newTasks) {
-            // send event
-            EventHandler.handle(task);
-        }
+        eventService.handle(newTasks);
+        log.info("saving " + newTasks.size() + " tasks to table");
         return repository.saveAll(newTasks);
     }
 
