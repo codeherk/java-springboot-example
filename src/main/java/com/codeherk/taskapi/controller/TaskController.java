@@ -2,9 +2,9 @@ package com.codeherk.taskapi.controller;
 
 import java.util.List;
 
-import com.codeherk.taskapi.exception.TaskNotFoundException;
 import com.codeherk.taskapi.model.Task;
-import com.codeherk.taskapi.repo.TaskRepository;
+import com.codeherk.taskapi.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,51 +16,44 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TaskController {
 
-    private final TaskRepository repository;
+    @Autowired
+    private TaskService taskService;
 
-    TaskController(TaskRepository repository) {
-        this.repository = repository;
-    }
+//    Constructors are inferred
+//    TaskController(){}
 
 
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/tasks")
-    List<Task> all() {
-        return repository.findAll();
+    List<Task> getTasks() {
+        return taskService.getTasks();
     }
     // end::get-aggregate-root[]
 
+//    @PostMapping("/tasks")
+//    Task createTask(@RequestBody Task newTask) {
+//        return taskService.createTask(newTask);
+//    }
+
     @PostMapping("/tasks")
-    Task newTask(@RequestBody Task newTask) {
-        return repository.save(newTask);
+    List<Task> createTasks(@RequestBody List<Task> newTasks) {
+        return taskService.createTasks(newTasks);
     }
 
-    // Single item
-
+    // Single task
     @GetMapping("/tasks/{id}")
-    Task one(@PathVariable Long id) {
-
-        return repository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException(id));
+    Task getTaskById(@PathVariable Long id) {
+        return taskService.getTaskById(id);
     }
 
     @PutMapping("/tasks/{id}")
-    Task replaceTask(@RequestBody Task newTask, @PathVariable Long id) {
-
-        return repository.findById(id)
-                .map(Task -> {
-                    Task.setDescription(newTask.getDescription());
-                    return repository.save(Task);
-                })
-                .orElseGet(() -> {
-                    newTask.setId(id);
-                    return repository.save(newTask);
-                });
+    Task updateTask(@RequestBody Task newTask, @PathVariable Long id) {
+        return taskService.updateTask(newTask, id);
     }
 
     @DeleteMapping("/tasks/{id}")
     void deleteTask(@PathVariable Long id) {
-        repository.deleteById(id);
+        taskService.deleteTask(id);
     }
 }
